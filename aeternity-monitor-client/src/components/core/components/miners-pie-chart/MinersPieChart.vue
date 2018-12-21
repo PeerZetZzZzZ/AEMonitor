@@ -3,9 +3,11 @@
 </template>
 <script>
   import Chart from 'chart.js';
+  import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
     name: 'miners-pie-chart',
+    mixins: [ChartMixin],
     props: {
       last24hMinersPercentage: {
         type: Array,
@@ -16,7 +18,7 @@
       last24hMinersPercentage() {
         const labels = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.beneficiary);
         const data = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.minedPercentage.toPrecision(4));
-        this.createChart(labels, data);
+        this.updateChart(labels, data);
       },
     },
     methods: {
@@ -30,7 +32,6 @@
             datasets: [{
               label: 'Micro Blocks in Key Blocks',
               data: data,
-              // borderWidth: 1,
               backgroundColor: ['#f0ebf9', '#b69de1', '#7c4fc9', '#4d2a89', '#311B58'],
             }]
           },

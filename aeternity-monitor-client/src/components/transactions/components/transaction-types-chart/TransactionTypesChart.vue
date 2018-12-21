@@ -5,9 +5,11 @@
 </template>
 <script>
   import Chart from 'chart.js';
+  import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
     name: 'transaction-types-chart',
+    mixins: [ChartMixin],
     props: {
       last24hTransactionTypes: {
         type: Array,
@@ -23,7 +25,7 @@
           labels.push(transactionType);
           data.push(rowOfGivenTransactionType !== undefined ? new Number(rowOfGivenTransactionType.count) : 0);
         });
-        this.createChart(labels, data);
+        this.updateChart(labels, data);
       }
     },
     methods: {

@@ -3,9 +3,11 @@
 </template>
 <script>
   import Chart from 'chart.js';
+  import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
     name: 'micro-blocks-in-key-blocks-chart',
+    mixins: [ChartMixin],
     components: {},
     props: {
       lastKeyBlocks: {
@@ -13,21 +15,11 @@
         required: true,
       },
     },
-    data() {
-      return {
-        chartInitialized: false,
-        char: null,
-      };
-    },
-    mounted() {
-    },
-    computed: {
-    },
     watch: {
       lastKeyBlocks() {
         const labels = this.lastKeyBlocks.map(lastKeyBlock => new String(lastKeyBlock.height)).reverse();
         const data = this.lastKeyBlocks.map(lastKeyBlock => lastKeyBlock.microBlocksCount).reverse();
-        this.createChart(labels, data);
+        this.updateChart(labels, data);
       }
     },
     methods: {
@@ -95,9 +87,3 @@
     },
   };
 </script>
-<style scoped>
-    #transactionsCountChartId {
-        /*height: 80% !important;*/
-        /*width: 100%;*/
-    }
-</style>

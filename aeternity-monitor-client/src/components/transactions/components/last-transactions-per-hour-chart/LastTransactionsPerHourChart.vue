@@ -7,9 +7,11 @@
   import Chart from 'chart.js';
   import moment from 'moment/min/moment.min';
   import { formatDateToShortReadableFormatHours } from '../../../../api/utils/date-format-service';
+  import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
     name: 'last-transactions-per-hour-chart',
+    mixins: [ChartMixin],
     props: {
       last24hTransactionTimes: {
         type: Array,
@@ -35,7 +37,7 @@
         keysAsArray.forEach(key => {
           valuesAsArray.push(perHourMap.get(key));
         });
-        this.createChart(keysAsArray, valuesAsArray);
+        this.updateChart(keysAsArray, valuesAsArray);
       }
     },
     methods: {
