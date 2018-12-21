@@ -10,12 +10,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="keyBlock in lastKeyBlocks">
+        <tr v-for="keyBlock in lastKeyBlocks" :class="{positive: keyBlock.transactionsCount > 0}">
             <td class="collapsing"><a class="tableLinkFont" :href="`https://explorer.aepps.com/#/generation/${keyBlock.height}`" target="_blank">{{keyBlock.height}}</a></td>
             <td>{{formatDate(new Date(keyBlock.time))}}</td>
             <td><span :class="{ 'mobileFont': isMobile}" >{{keyBlock.beneficiary}}</span></td>
             <td>{{keyBlock.microBlocksCount}}</td>
-            <td>{{keyBlock.transactionsCount}}</td>
+            <td >{{keyBlock.transactionsCount}}</td>
         </tr>
         </tbody>
     </table>

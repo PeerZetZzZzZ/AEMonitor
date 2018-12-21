@@ -42,6 +42,10 @@ tr:hover a{
     color: white !important;
 }
 
+tr.positive:hover a{
+    color: var(--colorExciting) !important;
+}
+
 .tableLinkFont {
     color: var(--colorExciting);
     font-weight: 700;
