@@ -128,3 +128,15 @@ exports.getMaxSavedKeyBlockHeight = (onSucceedCallback) => {
     }
   );
 };
+
+exports.getGroupedTransactionsPerKeyBlockFromLast24h = (onSucceedCallback) => {
+  db.pool.query('SELECT KB.HEIGHT, COUNT (AET) FROM KEY_BLOCK KB LEFT JOIN MICRO_BLOCK MB ON MB.KEY_BLOCK_HASH = KB.HASH LEFT JOIN AE_TRANSACTION AET ON AET.MICRO_BLOCK_HASH = MB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - \'1 day\'::INTERVAL GROUP BY KB.HEIGHT',
+    [global.properties.networkId], (err, res) => {
+      if (err) {
+        console.log('Getting grouped transactions per key block from last 24h failed!', err);
+        onSucceedCallback([]);
+      } else {
+        onSucceedCallback(res.rows);
+      }
+    });
+};

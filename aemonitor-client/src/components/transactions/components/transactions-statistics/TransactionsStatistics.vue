@@ -14,6 +14,18 @@
         </div>
         <div class="row">
             <div class="sixteen wide column">
+                <div class="ui statistic" :class="isMobile ? 'tiny' : 'small'">
+                    <div class="value">
+                        <i class="retweet icon"></i> {{Number(last24hAvgTransactionsPerGeneration).toFixed(1)}}
+                    </div>
+                    <div class="label">
+                        Avg trans. / generation [Last 24h]
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
                 <div class="ui mini statistic">
                     <div class="value">
                         <i class="money bill alternate icon"></i> {{last24hAvgTransactionFee}} AE
@@ -40,7 +52,11 @@
       last24hAvgTransactionFee: {
         type: String,
         required: true,
-      }
+      },
+      last24hAvgTransactionsPerGeneration: {
+        type: Number,
+        required: true,
+      },
     },
     data() {
       return {

@@ -24,7 +24,6 @@ export default {
       console.log('Fetching core data.');
       getLastKeyBlocks().subscribe((res) => {
         this.lastKeyBlocks = res.data;
-        console.log('Last key blocks', this.lastKeyBlocks);
         getBlockReward(this.lastKeyBlocks[0].height).subscribe((res) => {
           this.blockReward = res.data.blockReward;
         });

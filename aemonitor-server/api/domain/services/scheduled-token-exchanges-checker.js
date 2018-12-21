@@ -5,16 +5,16 @@ const checkExchanges = () => {
   const checkGateIo = async () => {
     const response = await axios.get('https://data.gateio.io/api2/1/ticker/ae_usdt');
     TokenRepository.updateTokenExchangeEntry({
-      volume24: new Number(response.data.baseVolume),
-      price: new Number(response.data.last),
+      volume24: Number(response.data.baseVolume),
+      price: Number(response.data.last),
       exchangeName: 'GATE.IO',
     });
   };
   const checkBinance = async () => {
     const response = await axios.get('https://api.binance.com/api/v1/ticker/24hr?symbol=AEBTC');
     TokenRepository.updateTokenExchangeEntry({
-      volume24: new Number(response.data.volume),
-      price: new Number(response.data.lastPrice),
+      volume24: Number(response.data.volume),
+      price: Number(response.data.lastPrice),
       exchangeName: 'Binance',
     });
   };
@@ -22,8 +22,8 @@ const checkExchanges = () => {
   const checkBithumb = async () => {
     const response = await axios.get('https://api.bithumb.com/public/ticker/ae');
     TokenRepository.updateTokenExchangeEntry({
-      volume24: new Number(response.data.data.volume_1day),
-      price: new Number(response.data.data.average_price),
+      volume24: Number(response.data.data.volume_1day),
+      price: Number(response.data.data.average_price),
       exchangeName: 'Bithumb',
     });
   };
@@ -31,8 +31,8 @@ const checkExchanges = () => {
   const checkUex = async () => {
     const response = await axios.get('https://open-api.uex.com/open/api/get_ticker?symbol=aebtc');
     TokenRepository.updateTokenExchangeEntry({
-      volume24: new Number(response.data.data.vol),
-      price: new Number(response.data.data.last),
+      volume24: Number(response.data.data.vol),
+      price: Number(response.data.data.last),
       exchangeName: 'Uex',
     });
   };

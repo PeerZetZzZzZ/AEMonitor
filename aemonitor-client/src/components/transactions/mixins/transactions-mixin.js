@@ -1,5 +1,5 @@
 import {
-  getLast24hAvgTransactionFee,
+  getLast24hAvgTransactionFee, getLast24hAvgTransactionsPerGeneration,
   getLast24hTransactionTimes,
   getLast24hTransactionTypes,
   getLastTransactions
@@ -14,6 +14,7 @@ export default {
       last24hTransactionTimes: [],
       last24hTransactionTypes: [],
       last24hAvgTransactionFee: '0',
+      last24hAvgTransactionsPerGeneration: 0,
     };
   },
   methods: {
@@ -32,6 +33,9 @@ export default {
       getLast24hAvgTransactionFee().subscribe((res) => {
         this.last24hAvgTransactionFee = this.toAe(res.data.avgFee);
       });
+      getLast24hAvgTransactionsPerGeneration().subscribe((res) => {
+        this.last24hAvgTransactionsPerGeneration = res.data.last24hAvgTransactionsPerGeneration;
+      })
     },
   },
 }

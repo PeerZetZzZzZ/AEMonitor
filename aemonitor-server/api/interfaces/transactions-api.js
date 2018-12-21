@@ -18,3 +18,15 @@ app.express.get('/api/getLast24hAvgTransactionFee', (req, res) => {
     res.send({avgFee: rows[0] !== undefined ? rows[0].avg : 0});
   });
 });
+
+
+app.express.get('/api/getLast24hAvgTransactionsPerGeneration', (req, res) => {
+  AeReadRepository.getGroupedTransactionsPerKeyBlockFromLast24h((rows) => {
+    const keyBlockQuantity = rows.length;
+    let transactionsDoneQuantity = 0;
+    rows.forEach(row => {
+      transactionsDoneQuantity += Number(row.count);
+    });
+    res.send({last24hAvgTransactionsPerGeneration: (keyBlockQuantity / transactionsDoneQuantity)});
+  });
+});
