@@ -13,8 +13,8 @@
         </div>
         <div class="row">
             <div class="sixteen wide column">
-                <h2 class="ui header">Micro Blocks in Key Blocks</h2>
-                <micro-blocks-in-key-blocks-chart :last-key-blocks="lastKeyBlocks"></micro-blocks-in-key-blocks-chart>
+                <h2 class="ui header">Micro blocks in generation</h2>
+                <micro-blocks-in-generation-chart :last-key-blocks="lastKeyBlocks"></micro-blocks-in-generation-chart>
             </div>
         </div>
         <div class="row">
@@ -33,7 +33,7 @@
 </template>
 <script>
   import KeyBlocksTable from './components/key-blocks-table/KeyBlocksTable';
-  import MicroBlocksInKeyBlocksChart from './components/micro-blocks-in-key-blocks-chart/MicroBlocksInKeyBlocksChart';
+  import MicroBlocksInGenerationChart from './components/micro-blocks-in-generation-chart/MicroBlocksInGenerationChart';
   import MinersPieChart from './components/miners-pie-chart/MinersPieChart';
   import BlockStatistics from './components/blocks-statistics/BlocksStatistics';
   import CoreMixin from './mixins/core-mixin';
@@ -44,7 +44,7 @@
     components: {
       BlockStatistics,
       MinersPieChart,
-      MicroBlocksInKeyBlocksChart,
+      MicroBlocksInGenerationChart,
       KeyBlocksTable
     },
   }

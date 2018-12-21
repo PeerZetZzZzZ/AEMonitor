@@ -28,8 +28,6 @@
 </template>
 <script>
   import TransactionsMixin from './mixins/transactions-mixin';
-  import MicroBlocksInKeyBlocksChart from '../core/components/micro-blocks-in-key-blocks-chart/MicroBlocksInKeyBlocksChart';
-  import MinersPieChart from '../core/components/miners-pie-chart/MinersPieChart';
   import LastTransactionsPerHourChart from './components/last-transactions-per-hour-chart/LastTransactionsPerHourChart';
   import TransactionsTable from './components/transactions-table/TransactionsTable';
   import TransactionsStatistics from './components/transactions-statistics/TransactionsStatistics';
@@ -47,8 +45,6 @@
       TransactionsStatistics,
       TransactionsTable,
       LastTransactionsPerHourChart,
-      MinersPieChart,
-      MicroBlocksInKeyBlocksChart,
     },
   }
 </script>

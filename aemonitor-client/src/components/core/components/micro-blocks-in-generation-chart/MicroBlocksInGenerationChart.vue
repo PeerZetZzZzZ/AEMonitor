@@ -1,12 +1,12 @@
 <template>
-    <canvas id="transactionsCountChartId"></canvas>
+    <canvas id="microBlocksInGenerationChartId"></canvas>
 </template>
 <script>
   import Chart from 'chart.js';
   import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
-    name: 'micro-blocks-in-key-blocks-chart',
+    name: 'micro-blocks-in-generation-chart',
     mixins: [ChartMixin],
     components: {},
     props: {
@@ -24,14 +24,14 @@
     },
     methods: {
       createChart(labels, data) {
-        var ctx = document.getElementById('transactionsCountChartId');
+        var ctx = document.getElementById('microBlocksInGenerationChartId');
         const aspectRatio = this.chartsAspectRatio;
         this.chart = new Chart(ctx, {
           type: 'bar',
           data: {
             labels: labels,
             datasets: [{
-              label: 'Micro Blocks in Key Blocks',
+              label: 'Micro blocks in generation key block',
               data: data,
               borderWidth: 1,
               backgroundColor: data.map(dataEntry => '#311B58')
@@ -51,7 +51,7 @@
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: 'Key Blocks',
+                  labelString: 'Generation key block height',
                   fontFamily: 'Roboto',
                   fontColor: '#F7296E',
                   fontSize: 15,
@@ -69,7 +69,7 @@
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: 'Number of Micro Blocks',
+                  labelString: 'Number of micro blocks in generation',
                   fontFamily: 'Roboto',
                   fontColor: '#F7296E',
                   fontSize: 15,
