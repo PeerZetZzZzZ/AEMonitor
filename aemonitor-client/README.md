@@ -1,8 +1,10 @@
-# aeternity-monitor-client
+# AEMonitor Client
 
 ## Project setup
 ```
 npm install
+
+For semantic build (in semantic directory): gulp build
 ```
 
 ### Compiles and hot-reloads for development
