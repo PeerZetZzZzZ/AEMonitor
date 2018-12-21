@@ -3,7 +3,7 @@
         <div class="row borderedRow">
             <div class="sixteen wide column">
                 <h1 class="ui centered header transactionStatsFont">Transactions stats</h1>
-                <transactions-statistics :last24h-transaction-times="last24hTransactionTimes" last24h-avg-transaction-fee="last24hAvgTransactionFee"></transactions-statistics>
+                <transactions-statistics :last24h-transaction-times="last24hTransactionTimes" :last24h-avg-transaction-fee="last24hAvgTransactionFee"></transactions-statistics>
             </div>
         </div>
         <div class="row borderedRow">
