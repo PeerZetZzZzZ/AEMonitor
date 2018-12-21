@@ -1,0 +1,39 @@
+:root {
+    --colorDramatic: #F7296E;
+    --colorExciting: #311B58;
+    --colorExciting2: #6F53A1;
+    --violet: #6435C9;
+    --brown: #A5673F;
+    --blue: #2185D0;
+}
+
+body {
+    background: var(--colorExciting);
+}
+
+.whiteFont {
+    color: white !important;
+}
+
+.dramaticTextShadow {
+    text-shadow: 0px 0px 15px var(--colorDramatic);
+}
+
+.dramaticBoxShadow {
+    box-shadow: 0px 0px 15px var(--colorDramatic);
+}
+
+
+.insideGrid {
+    box-shadow: 0px 0px 25px var(--colorDramatic);
+    background-color: white;
+    border: 1px solid var(--colorDramatic);
+}
+
+.blocksRow {
+    margin: 2% !important;
+}
+
+.cursorPointer:hover {
+    cursor: pointer;
+}
