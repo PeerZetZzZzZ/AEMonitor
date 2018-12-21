@@ -62,10 +62,6 @@ Ae({
   url: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`,
   internalUrl: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`
 }).then(async ae => {
-
-
-
-  const oracle = await ae.getOracle('ok_g5vQK6beY3vsTJHH7KBusesyzq9WMdEYorF8VyvZURXTjLnxT');
   let aeMonitorBlockHeightCounter = await ae.height();
   processAllNotSavedBlocksBetweenLastSavedAndCurrent(ae, aeMonitorBlockHeightCounter, () => {
     setInterval(async () => {

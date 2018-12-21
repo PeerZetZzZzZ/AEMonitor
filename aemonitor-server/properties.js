@@ -20,8 +20,8 @@ global.properties = {
   postgresPort: 5432,
 
   //AEMonitor specific settings
-  checkBlockchainIntervalMillisecs: 10000, //every ten seconds,
-  checkExchangesIntervalMillisecs: 10000, //every ten seconds,
+  checkBlockchainIntervalMillisecs: 10000, //every 20 seconds,
+  checkExchangesIntervalMillisecs: 10000, //every 20 seconds,
   lastTransactionsCount: 20,
   lastKeyBlocksCount: 20,
   fetchWholeBlockchainOnStarthWhenEmptyDb: false,
