@@ -13,7 +13,8 @@ app.express.get('/api/getLastKeyBlocks', (req, res) => {
           const transactionsCountRowsForGivenMicroBlock = transactionsCountRowsPerMicroBlock
             .filter(transactionsCountRowsPerMicroBlockRow => transactionsCountRowsPerMicroBlockRow.block_height === keyBlockRow.height);
           keyBlockRow.transactionsCount = transactionsCountRowsForGivenMicroBlock.length === 1 ? new Number(transactionsCountRowsForGivenMicroBlock[0].count) : 0;
-          keyBlockRow.microBlocksCount = microBlockRows.filter(microBlockRow => microBlockRow.hash === keyBlockRow.hash).length;
+          const microBlocksCountForGivenBlockRow = microBlockRows.filter(microBlockRow => microBlockRow.hash === keyBlockRow.hash)[0];
+          keyBlockRow.microBlocksCount = microBlocksCountForGivenBlockRow !== undefined ? microBlocksCountForGivenBlockRow.count : 0;
         });
         res.send(keyBlockRows);
       });
