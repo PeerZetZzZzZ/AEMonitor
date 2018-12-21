@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 module.exports = {
   configureWebpack: {
@@ -13,7 +13,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:6789/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '',
@@ -21,4 +21,4 @@ module.exports = {
       },
     },
   },
-}
+};

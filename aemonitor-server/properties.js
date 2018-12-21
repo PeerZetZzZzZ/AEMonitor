@@ -1,5 +1,5 @@
 global.properties = {
-  aeMonitorServerPort: 3000,
+  aeMonitorServerPort: 6789,
 
   //Aeternity network settings
   //CHANGE IT!!!
