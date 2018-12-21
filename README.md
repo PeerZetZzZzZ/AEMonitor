@@ -36,9 +36,10 @@ Update properties.js and provide:
 - database (postgres) connection info [user, host, database, password, port],
 - node info [node url, node port, network id **important**!]
 
-
 **[Optional]**
 Configure properties.js settings for blockchain check interval seconds and other settings.
+
+**Install**: npm install
 
 **Run:** node app.js (default port 3000)
 
@@ -46,6 +47,8 @@ Configure properties.js settings for blockchain check interval seconds and other
 
 **[Optional]**
 Configure assets/properties.js for server check interval seconds.
+
+**Install**: npm install
 
 **Run (vue live server):** npm run serve
 
