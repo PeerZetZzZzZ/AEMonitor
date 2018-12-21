@@ -40,7 +40,7 @@ Update properties.js and provide:
 **[Optional]**
 Configure properties.js settings for blockchain check interval seconds and other settings.
 
-**Run:** node app.js
+**Run:** node app.js (default port 3000)
 
 ## Client:
 
