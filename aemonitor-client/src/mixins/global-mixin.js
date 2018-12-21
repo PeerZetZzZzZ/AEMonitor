@@ -16,6 +16,7 @@ export default {
         transactionOracleResponseTx: 'OracleResponseTx',
         transactionOracleQueryTx: 'OracleQueryTx',
         transactionChannelCreateTx: 'ChannelCreateTx',
+        transactionChannelCloseMutualTx: 'ChannelCloseMutualTx',
       },
     };
   },

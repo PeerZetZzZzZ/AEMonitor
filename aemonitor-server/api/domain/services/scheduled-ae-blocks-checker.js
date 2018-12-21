@@ -26,7 +26,6 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
 
 const processBlocksAndTransactionsOfGeneration = (ae, generation) => {
   AeSaveRepository.saveKeyBlock(generation.keyBlock, ()=> {
-    console.log('Generacja: ', generation.microBlocks);
     generation.microBlocks.forEach(async microBlockHeaderString => {
       const microBlockHeader = await ae.getMicroBlockHeader(microBlockHeaderString);
       AeSaveRepository.saveMicroBlock(microBlockHeader, generation.keyBlock.hash, async () => {

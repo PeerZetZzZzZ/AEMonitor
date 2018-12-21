@@ -54,7 +54,8 @@
             return 'ui grey label';
           case this.transactionTypes.transactionChannelCreateTx:
             return 'ui black label';
-
+          case this.transactionTypes.transactionChannelCloseMutualTx:
+            return 'ui yellow label';
         }
       }
     },
