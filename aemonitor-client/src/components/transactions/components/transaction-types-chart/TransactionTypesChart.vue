@@ -41,8 +41,7 @@
               data: data,
               borderWidth: 1,
               //this matching colors from semantic and used in labels in transaction tables - DONT CHANGE THE ORDER
-              backgroundColor: ['#A5673F', '#2185D0', '#6435C9']
-
+              backgroundColor: ['#A5673F', '#2185D0', '#6435C9', '#B5CC18', '#00B5AD', '#A333C8', '#DB2828', '#F2711C', '#E03997', '#767676', '#1B1C1D']
             }]
           },
           options: {

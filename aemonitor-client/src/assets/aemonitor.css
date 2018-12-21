@@ -37,3 +37,12 @@ body {
 .cursorPointer:hover {
     cursor: pointer;
 }
+
+tr:hover a{
+    color: white !important;
+}
+
+.tableLinkFont {
+    color: var(--colorExciting);
+    font-weight: 700;
+}

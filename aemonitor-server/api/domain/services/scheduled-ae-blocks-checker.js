@@ -5,8 +5,9 @@ const AeReadRepository = require('../repository/ae-read-repository');
 const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHeightCounter, onFinishCallback) => {
   AeReadRepository.getMaxSavedKeyBlockHeight(async (rows) => {
     console.log('[AEMonitor Server STARTUP] Starting processing all blocks between last saved and current.', );
-    if (rows[0].max !== null) {
-      const maxSavedBlockHeight = Number(rows[0].max);
+    if (rows[0].max !== null || global.properties.fetchWholeBlockchainOnStarthWhenEmptyDb) {
+      // const maxSavedBlockHeight = rows[0].max !== null ? Number(rows[0].max) : 1;
+      const maxSavedBlockHeight = 3000;
       console.log(`[AEMonitor Server STARTUP] Last saved block height: ${maxSavedBlockHeight}.`);
       const currentHeight = await ae.height();
       console.log(`[AEMonitor Server STARTUP] Current blockchain block height: ${currentHeight}.`);
@@ -26,6 +27,7 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
 
 const processBlocksAndTransactionsOfGeneration = (ae, generation) => {
   AeSaveRepository.saveKeyBlock(generation.keyBlock, ()=> {
+    console.log('Generacja: ', generation.microBlocks);
     generation.microBlocks.forEach(async microBlockHeaderString => {
       const microBlockHeader = await ae.getMicroBlockHeader(microBlockHeaderString);
       AeSaveRepository.saveMicroBlock(microBlockHeader, generation.keyBlock.hash, async () => {
@@ -60,6 +62,10 @@ Ae({
   url: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`,
   internalUrl: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`
 }).then(async ae => {
+
+
+
+  const oracle = await ae.getOracle('ok_g5vQK6beY3vsTJHH7KBusesyzq9WMdEYorF8VyvZURXTjLnxT');
   let aeMonitorBlockHeightCounter = await ae.height();
   processAllNotSavedBlocksBetweenLastSavedAndCurrent(ae, aeMonitorBlockHeightCounter, () => {
     setInterval(async () => {

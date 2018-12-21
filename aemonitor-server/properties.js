@@ -8,7 +8,6 @@ global.properties = {
   // - test net network -> TESTNET
   // - edge net network -> TESTNET
   networkId: 'MAINNET',
-  //roma-net.aepps.com
   // aeNodeUrl: 'https://sdk-testnet.aepps.com',
   aeNodeUrl: 'https://roma-net.aepps.com',
   aeNodePort: 443,
@@ -25,4 +24,5 @@ global.properties = {
   checkExchangesIntervalMillisecs: 10000, //every ten seconds,
   lastTransactionsCount: 20,
   lastKeyBlocksCount: 20,
+  fetchWholeBlockchainOnStarthWhenEmptyDb: false,
 };

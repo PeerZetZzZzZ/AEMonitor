@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <tr v-for="keyBlock in lastKeyBlocks">
-            <td class="collapsing">{{keyBlock.height}}</td>
+            <td class="collapsing"><a class="tableLinkFont" :href="`https://explorer.aepps.com/#/generation/${keyBlock.height}`" target="_blank">{{keyBlock.height}}</a></td>
             <td>{{formatDate(new Date(keyBlock.time))}}</td>
             <td><span :class="{ 'mobileFont': isMobile}" >{{keyBlock.beneficiary}}</span></td>
             <td>{{keyBlock.microBlocksCount}}</td>
