@@ -1,5 +1,5 @@
 # AEMonitor
-
+![Alt text](screenshot.png?raw=true "Screenshot")
 Live dashboard monitor for Aeternity blockchain (https://aeternity.com/).
 
 Server side: Node.js + PostgreSQL

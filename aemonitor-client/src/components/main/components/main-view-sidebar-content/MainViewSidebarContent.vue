@@ -15,7 +15,7 @@
         <div class="footerItem">
             <span class="whiteFont">Next refresh: {{refreshSecondsIntervalLiveCounter}}s</span><br>
             <span class="whiteFont">Refresh every: {{refreshSecondsInterval}}s</span><br>
-            <span class="whiteFont" style="font-size: 0.8rem;"><span style="color: var(--colorDramatic);">Made by:</span> Przemysław Thomann</span>
+            <span class="whiteFont" style="font-size: 0.8rem;"><span style="color: var(--colorDramatic);">Made by:</span> Przemysław Thomann <a target="_blank" href="https://mobycrypt.com">mobycrypt.com</a></span> <br>
         </div>
     </div>
 </template>

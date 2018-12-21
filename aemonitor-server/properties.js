@@ -2,16 +2,16 @@ global.properties = {
   aeMonitorServerPort: 3000,
 
   //Aeternity network settings
-  //roma-net.aepps.com
-  // aeNodeUrl: 'https://sdk-testnet.aepps.com',
-  aeNodeUrl: 'https://roma-net.aepps.com',
-  aeNodePort: 443,
   //CHANGE IT!!!
   // When:
   // - main net network -> MAINNET
   // - test net network -> TESTNET
   // - edge net network -> TESTNET
   networkId: 'MAINNET',
+  //roma-net.aepps.com
+  // aeNodeUrl: 'https://sdk-testnet.aepps.com',
+  aeNodeUrl: 'https://roma-net.aepps.com',
+  aeNodePort: 443,
 
   //Database postgres settings
   postgresUser: 'postgres',
