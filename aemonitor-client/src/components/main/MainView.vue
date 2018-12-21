@@ -10,5 +10,8 @@ import MainViewPc from './MainViewPc';
 export default {
   name: 'main-view',
   components: {MainViewPc, MainViewMobile},
+  mounted() {
+    this.$router.push('/core');
+  }
 }
 </script>

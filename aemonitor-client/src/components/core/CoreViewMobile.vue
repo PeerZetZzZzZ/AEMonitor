@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <div class="sixteen wide column">
-                <h2 class="ui header">Top miners % [last 24h]</h2>
+                <h2 class="ui header">Top miners % [Last 24h]</h2>
                 <miners-pie-chart :last24h-miners-percentage="last24hMinersPercentage"></miners-pie-chart>
             </div>
         </div>

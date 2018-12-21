@@ -24,7 +24,7 @@
                             <micro-blocks-in-key-blocks-chart :last-key-blocks="lastKeyBlocks"></micro-blocks-in-key-blocks-chart>
                         </div>
                         <div class="eight wide column">
-                            <h2 class="ui header">Top miners % [last 24h]</h2>
+                            <h2 class="ui header">Top miners % [Last 24h]</h2>
                             <miners-pie-chart :last24h-miners-percentage="last24hMinersPercentage"></miners-pie-chart>
                         </div>
                     </div>

@@ -22,7 +22,6 @@
       };
     },
     mounted() {
-      this.$router.push('/core');
       this.sidebarHeight = $('.ui.sidebar').width();
     },
   }
