@@ -5,7 +5,6 @@ const AeReadRepository = require('../repository/ae-read-repository');
 const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHeightCounter, onFinishCallback) => {
   AeReadRepository.getMaxSavedKeyBlockHeight(async (rows) => {
     console.log('[AEMonitor Server STARTUP] Starting processing all blocks between last saved and current.', );
-    console.log(`Mam tą wartość: ${rows[0].max}`);
     if (rows[0].max !== null) {
       const maxSavedBlockHeight = Number(rows[0].max);
       console.log(`[AEMonitor Server STARTUP] Last saved block height: ${maxSavedBlockHeight}.`);

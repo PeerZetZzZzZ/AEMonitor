@@ -3,7 +3,7 @@ const AeReadRepository = require('../domain/repository/ae-read-repository');
 const AeApiFacadeService = require('../domain/services/ae-api-facade-service');
 const BlockRewardsRepository = require('../domain/repository/block-rewards-repository');
 
-app.express.get('/getLastKeyBlocks', (req, res) => {
+app.express.get('/api/getLastKeyBlocks', (req, res) => {
   AeReadRepository.getLastKeyBlocks(global.properties.lastKeyBlocksCount, (keyBlockRows) => {
     const keyBlocksHeightArray = keyBlockRows.map(row => new Number(row.height));
     const keyBlocksHashArray = keyBlockRows.map(row => row.hash);
@@ -21,7 +21,7 @@ app.express.get('/getLastKeyBlocks', (req, res) => {
   })
 });
 
-app.express.get('/getLast24hMinersPercentage', (req, res) => {
+app.express.get('/api/getLast24hMinersPercentage', (req, res) => {
   AeReadRepository.getBlocksMinedByMinersWithinLast24hOrderedDesc((rows) => {
     let totalKeyBlocksMinedWithinLast24h = 0;
     rows.forEach(row => totalKeyBlocksMinedWithinLast24h += new Number(row.count));
@@ -45,18 +45,18 @@ app.express.get('/getLast24hMinersPercentage', (req, res) => {
   })
 });
 
-app.express.get('/getLast24hTransactionTimes', (req, res) => {
+app.express.get('/api/getLast24hTransactionTimes', (req, res) => {
   AeReadRepository.getTransactionsTimesOfBlocksFromLast24hOrderedDesc((rows) => {
     res.send(rows.map(row => row.time));
   })
 });
 
-app.express.get('/getBlockDifficulty', async (req, res) => {
+app.express.get('/api/getBlockDifficulty', async (req, res) => {
   const status = await AeApiFacadeService.get('/status');
   res.send({difficulty: status.data.difficulty});
 });
 
-app.express.get('/getBlockReward/:blockNumber', (req, res) => {
+app.express.get('/api/getBlockReward/:blockNumber', (req, res) => {
   let blockReward = 0;
   for (let i = 0; i < BlockRewardsRepository.blockRewards.length; i++) {
     if (req.params.blockNumber < BlockRewardsRepository.blockRewards[i].block) {
@@ -67,7 +67,7 @@ app.express.get('/getBlockReward/:blockNumber', (req, res) => {
   res.send({blockReward: blockReward});
 });
 
-app.express.get('/getLast1hAvgBlockTime', (req, res) => {
+app.express.get('/api/getLast1hAvgBlockTime', (req, res) => {
   AeReadRepository.getCountKeyBlocksFromLastHour((rows) => {
     const blockCount = new Number(rows[0].count);
     res.send({last1hAvgBlockTime: blockCount > 0 ? (60 / blockCount) : 0});
