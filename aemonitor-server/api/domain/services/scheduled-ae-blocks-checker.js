@@ -4,8 +4,9 @@ const AeReadRepository = require('../repository/ae-read-repository');
 
 const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHeightCounter, onFinishCallback) => {
   AeReadRepository.getMaxSavedKeyBlockHeight(async (rows) => {
-    console.log('[AEMonitor Server STARTUP] Starting processing all blocks between last saved and current.');
-    if (rows.length === 1) {
+    console.log('[AEMonitor Server STARTUP] Starting processing all blocks between last saved and current.', );
+    console.log(`Mam tą wartość: ${rows[0].max}`);
+    if (rows[0].max !== null) {
       const maxSavedBlockHeight = Number(rows[0].max);
       console.log(`[AEMonitor Server STARTUP] Last saved block height: ${maxSavedBlockHeight}.`);
       const currentHeight = await ae.height();
@@ -16,9 +17,11 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
         processBlocksAndTransactionsOfGeneration(ae, generation);
         aeMonitorBlockHeightCounter = height;
       }
-      console.log(`[AEMonitor Server STARTUP] Finished processing all block between last saved and current. AEMonitor db is up to date now.`);
-      onFinishCallback();
+      console.log(`[AEMonitor Server STARTUP] Finished processing all blocks between last saved and current. AEMonitor db is up to date now.`);
+    } else {
+      console.log(`[AEMonitor Server STARTUP] Finished processing all blocks because db is empty. Starting from current block.`);
     }
+    onFinishCallback();
   });
 };
 
