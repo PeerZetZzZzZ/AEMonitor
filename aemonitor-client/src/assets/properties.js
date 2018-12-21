@@ -1,3 +1,3 @@
 window.properties = {
-  refetchIntervalMillisecs: 10000,
+  refetchIntervalMillisecs: 20000,
 };
