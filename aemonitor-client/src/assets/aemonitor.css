@@ -5,6 +5,9 @@
     --violet: #6435C9;
     --brown: #A5673F;
     --blue: #2185D0;
+    --colorNavy: #001f3f;
+    --colorMaroon: #85144b;
+    --colorLime: #01FF70;
 }
 
 body {
@@ -49,4 +52,16 @@ tr.positive:hover a{
 .tableLinkFont {
     color: var(--colorExciting);
     font-weight: 700;
+}
+
+.navyLabel {
+    background-color: var(--colorNavy) !important;
+}
+
+.maroonLabel {
+    background-color: var(--colorMaroon) !important;
+}
+
+.limeLabel {
+    background-color: var(--colorLime) !important;
 }

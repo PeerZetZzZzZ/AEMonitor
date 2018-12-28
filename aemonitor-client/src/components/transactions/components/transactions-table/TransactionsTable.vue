@@ -56,6 +56,12 @@
             return 'ui black label';
           case this.transactionTypes.transactionChannelCloseMutualTx:
             return 'ui yellow label';
+          case this.transactionTypes.transactionChannelSettleTx:
+            return 'ui navyLabel label';
+          case this.transactionTypes.transactionChannelCloseSoloTx:
+            return 'ui maroonLabel label';
+          case this.transactionTypes.transactionChannelSlashTx:
+            return 'ui limeLabel label';
         }
       }
     },
