@@ -56,12 +56,15 @@ tr.positive:hover a{
 
 .navyLabel {
     background-color: var(--colorNavy) !important;
+    color: white !important;
 }
 
 .maroonLabel {
     background-color: var(--colorMaroon) !important;
+    color: white !important;
 }
 
 .limeLabel {
     background-color: var(--colorLime) !important;
+    color: white !important;
 }
