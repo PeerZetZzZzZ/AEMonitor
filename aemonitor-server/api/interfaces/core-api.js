@@ -46,12 +46,6 @@ app.express.get('/api/getLast24hMinersPercentage', (req, res) => {
   })
 });
 
-app.express.get('/api/getLast24hTransactionTimes', (req, res) => {
-  AeReadRepository.getTransactionsTimesOfBlocksFromLast24hOrderedDesc((rows) => {
-    res.send(rows.map(row => row.time));
-  })
-});
-
 app.express.get('/api/getBlockDifficulty', async (req, res) => {
   const status = await AeApiFacadeService.get('/status');
   res.send({difficulty: status.data.difficulty});

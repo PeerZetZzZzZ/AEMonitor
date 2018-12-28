@@ -22,18 +22,18 @@
         const data = [];
         Object.values(this.transactionTypes).forEach(transactionType => {
           const rowOfGivenTransactionType = this.last24hTransactionTypes.filter(row => row.type === transactionType)[0];
-          labels.push(transactionType);
           data.push(rowOfGivenTransactionType !== undefined ? new Number(rowOfGivenTransactionType.count) : 0);
+          labels.push(transactionType);
         });
         this.updateChart(labels, data);
       }
     },
     methods: {
       createChart(labels, data) {
-        const aspectRatio = this.chartsAspectRatio;
+        const aspectRatio = this.isMobile ? 0.5 : 2;
         var ctx = document.getElementById('transactionTypesChartId');
         this.chart = new Chart(ctx, {
-          type: 'bar',
+          type: 'doughnut',
           data: {
             labels: labels,
             datasets: [{
@@ -47,43 +47,28 @@
           options: {
             aspectRatio: aspectRatio,
             legend: {
-              display: false
+              display: true
             },
             scales: {
               xAxes: [{
                 ticks: {
-                  fontColor: "black",
-                  beginAtZero: true,
-                  fontSize: 10,
+                  display: false,
                 },
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Transaction types',
-                  fontFamily: 'Roboto',
-                  fontColor: '#F7296E',
-                  fontSize: 15,
-                },
+
                 gridLines: {
-                  display: true,
-                  color: '#311B58'
+                  display: false,
+                  color: '#311B58',
+                  drawBorder: false,
                 }
               }],
               yAxes: [{
                 ticks: {
-                  fontColor: "black",
-                  beginAtZero: true,
-                  fontSize: 10,
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Transactions done',
-                  fontFamily: 'Roboto',
-                  fontColor: '#F7296E',
-                  fontSize: 15,
+                  display: false,
                 },
                 gridLines: {
-                  display: true,
-                  color: '#311B58'
+                  display: false,
+                  color: '#311B58',
+                  drawBorder: false,
                 }
               }]
 

@@ -45,14 +45,14 @@
         const aspectRatio = this.chartsAspectRatio;
         var ctx = document.getElementById('lastTransactionsPerHourChartId');
         this.chart = new Chart(ctx, {
-          type: 'bar',
+          type: 'line',
           data: {
             labels: labels,
             datasets: [{
               label: 'Transactions done',
               data: data,
               borderWidth: 1,
-              backgroundColor: data.map(dataEntry => '#F7296E')
+              backgroundColor: 'rgb(247, 41, 110)'
             }]
           },
           options: {
@@ -97,7 +97,6 @@
                   color: '#311B58'
                 }
               }]
-
             }
           }
         });

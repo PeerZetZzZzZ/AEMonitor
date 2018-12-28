@@ -19,7 +19,6 @@ app.express.get('/api/getLast24hAvgTransactionFee', (req, res) => {
   });
 });
 
-
 app.express.get('/api/getLast24hAvgTransactionsPerGeneration', (req, res) => {
   AeReadRepository.getGroupedTransactionsPerKeyBlockFromLast24h((rows) => {
     const keyBlockQuantity = rows.length;
@@ -29,4 +28,10 @@ app.express.get('/api/getLast24hAvgTransactionsPerGeneration', (req, res) => {
     });
     res.send({last24hAvgTransactionsPerGeneration: (keyBlockQuantity / transactionsDoneQuantity)});
   });
+});
+
+app.express.get('/api/getLast24hTransactionTimes', (req, res) => {
+  AeReadRepository.getTransactionsTimesOfBlocksFromLast24hOrderedDesc((rows) => {
+    res.send(rows.map(row => row.time));
+  })
 });
