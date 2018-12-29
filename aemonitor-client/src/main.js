@@ -19,5 +19,6 @@ Chart.defaults.global.plugins.labels = [
   {
     fontColor: '#ffffff',
     showZero: false,
+    precision: 2,
   }
 ];
