@@ -26,5 +26,5 @@ global.properties = {
   checkExchangesIntervalMillisecs: 20000, //every 20 seconds,
   lastTransactionsCount: 20,
   lastKeyBlocksCount: 20,
-  fetchWholeBlockchainOnStartWhenEmptyDb: true,
+  fetchWholeBlockchainOnStartWhenEmptyDb: false,
 };
