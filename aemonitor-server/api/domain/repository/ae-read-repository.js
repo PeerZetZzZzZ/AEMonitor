@@ -26,7 +26,7 @@ exports.getMicroBlocksCountForGivenBlocksHashArray = (keyBlocksHashArray, onSucc
 };
 
 exports.getBlocksMinedByMinersWithinLast24hOrderedDesc = (onSucceedCallback) => {
-  db.pool.query('SELECT BENEFICIARY, COUNT(*) FROM KEY_BLOCK WHERE NETWORK_ID = $1 AND time >= NOW() - \'1 day\'::INTERVAL GROUP BY BENEFICIARY ORDER BY COUNT(*) ASC',
+  db.pool.query('SELECT BENEFICIARY, COUNT(*) FROM KEY_BLOCK WHERE NETWORK_ID = $1 AND time >= NOW() - \'1 day\'::INTERVAL GROUP BY BENEFICIARY ORDER BY COUNT(*) DESC',
     [global.properties.networkId],
     (err, res) => {
       if (err) {

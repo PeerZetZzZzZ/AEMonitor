@@ -16,6 +16,7 @@
     },
     watch: {
       last24hMinersPercentage() {
+        console.log(this.last24hMinersPercentage);
         const labels = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.beneficiary);
         const data = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.minedPercentage.toPrecision(4));
         this.updateChart(labels, data);
@@ -32,7 +33,7 @@
             datasets: [{
               label: 'Micro Blocks in Key Blocks',
               data: data,
-              backgroundColor: ['#f0ebf9', '#b69de1', '#7c4fc9', '#4d2a89', '#311B58'],
+              backgroundColor: ['#311B58', '#4d2a89', '#7c4fc9', '#b69de1', '#f0ebf9'],
             }]
           },
           options: {
