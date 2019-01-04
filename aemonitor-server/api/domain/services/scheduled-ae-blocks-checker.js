@@ -10,8 +10,8 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
       console.log(`[AEMonitor Server STARTUP] Last saved block height: ${maxSavedBlockHeight}.`);
       const currentHeight = await ae.height();
       console.log(`[AEMonitor Server STARTUP] Current blockchain block height: ${currentHeight}.`);
-      console.log(`[AEMonitor Server STARTUP] Starting processing fetching all blocks between ${maxSavedBlockHeight} - ${currentHeight}.`);
-      for (let height = maxSavedBlockHeight; height <= currentHeight; height++) {
+      console.log(`[AEMonitor Server STARTUP] Starting processing fetching all blocks between ${maxSavedBlockHeight} - ${currentHeight -1}.`);
+      for (let height = maxSavedBlockHeight; height < currentHeight; height++) {
         const generation = await ae.getGeneration(height);
         processBlocksAndTransactionsOfGeneration(ae, generation);
         aeMonitorBlockHeightCounter = height;
@@ -38,14 +38,6 @@ const processBlocksAndTransactionsOfGeneration = (ae, generation) => {
   });
 };
 
-const checkOneMoreTimeAllBlocksBetweenOldCurrentHeightAndNewCurrentHeight =  async (ae, aeMonitorBlockHeightCounter, currentBlockHeight) => {
-  for (let height = aeMonitorBlockHeightCounter; height < currentBlockHeight; height ++) {
-    const generation = await ae.getGeneration(height);
-    console.log(`[AEMonitor Server] Last time checking block with height ${height} between moving to new block`);
-    processBlocksAndTransactionsOfGeneration(ae, generation);
-  }
-};
-
 /**
  * AEMonitor engine workflow:
  * 1. On application startup check last saved key block height and compare to current key block height.
@@ -63,13 +55,13 @@ Ae({
   let aeMonitorBlockHeightCounter = await ae.height();
   processAllNotSavedBlocksBetweenLastSavedAndCurrent(ae, aeMonitorBlockHeightCounter, () => {
     setInterval(async () => {
-      const currentGeneration = await ae.getCurrentGeneration();
-      const currentBlockHeight = currentGeneration.keyBlock.height;
-      if (aeMonitorBlockHeightCounter === currentBlockHeight) {
+      const currentBlockHeight = await ae.height();
+      console.log(`[AEMonitor Server] Current block height: ${currentBlockHeight}.`);
+      if (currentBlockHeight > aeMonitorBlockHeightCounter) {
+        console.log(`[AEMonitor Server] New block mined. Getting and saving block height ${aeMonitorBlockHeightCounter} generation.`);
+        const currentGeneration = await ae.getGeneration(aeMonitorBlockHeightCounter);
         processBlocksAndTransactionsOfGeneration(ae, currentGeneration);
-      } else {
-        checkOneMoreTimeAllBlocksBetweenOldCurrentHeightAndNewCurrentHeight(ae, aeMonitorBlockHeightCounter, currentBlockHeight);
-        processBlocksAndTransactionsOfGeneration(ae, currentGeneration);
+        console.log(`[AEMonitor Server] Saved generation of block height ${aeMonitorBlockHeightCounter}. Waiting for block ${aeMonitorBlockHeightCounter + 1}.`);
         aeMonitorBlockHeightCounter = currentBlockHeight;
       }
     }, global.properties.checkBlockchainIntervalMillisecs)

@@ -9,10 +9,8 @@ global.properties = {
   // - edge net network -> TESTNET
   networkId: 'MAINNET',
   // aeNodeUrl: 'https://sdk-testnet.aepps.com',
-  // aeNodeUrl: 'https://roma-net.aepps.com',
-  aeNodeUrl: 'http://52.77.168.79',
-  // aeNodePort: 443,
-  aeNodePort: 3013,
+  aeNodeUrl: 'https://roma-net.aepps.com',
+  aeNodePort: 443,
 
   //Database postgres settings
   postgresUser: 'postgres',

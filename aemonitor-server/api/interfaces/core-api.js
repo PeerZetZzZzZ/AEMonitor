@@ -64,7 +64,6 @@ app.express.get('/api/getBlockReward/:blockNumber', (req, res) => {
 
 app.express.get('/api/getLast1hAvgBlockTime', (req, res) => {
   AeReadRepository.getCountKeyBlocksFromLastHour((rows) => {
-    console.log('mam', rows);
     const blockCount = Number(rows[0].count);
     res.send({last1hAvgBlockTime: blockCount > 0 ? (60 / blockCount) : 0});
   });
