@@ -10,7 +10,9 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
       console.log(`[AEMonitor Server STARTUP] Last saved block height: ${maxSavedBlockHeight}.`);
       const currentHeight = await ae.height();
       console.log(`[AEMonitor Server STARTUP] Current blockchain block height: ${currentHeight}.`);
-      console.log(`[AEMonitor Server STARTUP] Starting processing fetching all blocks between ${maxSavedBlockHeight} - ${currentHeight -1}.`);
+      if (maxSavedBlockHeight > (currentHeight - 1)) {
+        console.log(`[AEMonitor Server STARTUP] Starting processing fetching all blocks between ${maxSavedBlockHeight} - ${currentHeight -1}.`);
+      }
       for (let height = maxSavedBlockHeight; height < currentHeight; height++) {
         const generation = await ae.getGeneration(height);
         processBlocksAndTransactionsOfGeneration(ae, generation);
