@@ -52,8 +52,10 @@ exports.getTransactionsCountOfGivenBlocksHeight = (keyBlocksHeightArray, onSucce
     });
 };
 
-exports.getTransactionsTimesOfBlocksFromLast24hOrderedDesc = (onSucceedCallback) => {
-  db.pool.query('SELECT KB.TIME FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - \'1 day\'::INTERVAL',
+exports.getTransactionsTimesOfBlocksFromLast24hOrderedDesc = (onSucceedCallback, timeFrameUnit, timeFrameUnitQuantity) => {
+  let timeFrame = `'${timeFrameUnitQuantity} ${timeFrameUnit}'`;
+  console.log('mam unity:', timeFrame)
+  db.pool.query(`SELECT KB.TIME FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - ${timeFrame}::INTERVAL`,
     [global.properties.networkId],
     (err, res) => {
       if (err) {
@@ -91,8 +93,9 @@ exports.getLastTransactions = (number, onSucceedCallback) => {
 };
 
 
-exports.getGroupedTransactionsPerTypeQuantityFromLast24h = (onSucceedCallback) => {
-  db.pool.query('SELECT AET.TYPE, COUNT(*) FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - \'1 day\'::INTERVAL GROUP BY AET.TYPE',
+exports.getGroupedTransactionsPerTypeQuantityFromLastTimeFrame = (onSucceedCallback, timeFrameUnit, timeFrameUnitQuantity) => {
+  let timeFrame = `'${timeFrameUnitQuantity} ${timeFrameUnit}'`;
+  db.pool.query(`SELECT AET.TYPE, COUNT(*) FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - ${timeFrame}::INTERVAL GROUP BY AET.TYPE`,
     [global.properties.networkId], (err, res) => {
       if (err) {
         console.log('Getting grouped transactions per type quantity from last 24h failed!', err);
@@ -103,8 +106,9 @@ exports.getGroupedTransactionsPerTypeQuantityFromLast24h = (onSucceedCallback) =
     });
 };
 
-exports.getAvgTransactionsFeeFromLast24h = (onSucceedCallback) => {
-  db.pool.query('SELECT AVG(AET.FEE) FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - \'1 day\'::INTERVAL',
+exports.getAvgTransactionsFeeFromLast24h = (onSucceedCallback, timeFrameUnit, timeFrameUnitQuantity) => {
+  let timeFrame = `'${timeFrameUnitQuantity} ${timeFrameUnit}'`;
+  db.pool.query(`SELECT AVG(AET.FEE) FROM AE_TRANSACTION AET JOIN MICRO_BLOCK MB ON MB.HASH = AET.MICRO_BLOCK_HASH JOIN KEY_BLOCK KB ON MB.KEY_BLOCK_HASH = KB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - ${timeFrame}::INTERVAL`,
     [global.properties.networkId], (err, res) => {
       if (err) {
         console.log('Getting last 24h avg transactions fee failed!', err);
@@ -129,8 +133,9 @@ exports.getMaxSavedKeyBlockHeight = (onSucceedCallback) => {
   );
 };
 
-exports.getGroupedTransactionsPerKeyBlockFromLast24h = (onSucceedCallback) => {
-  db.pool.query('SELECT KB.HEIGHT, COUNT (AET) FROM KEY_BLOCK KB LEFT JOIN MICRO_BLOCK MB ON MB.KEY_BLOCK_HASH = KB.HASH LEFT JOIN AE_TRANSACTION AET ON AET.MICRO_BLOCK_HASH = MB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - \'1 day\'::INTERVAL GROUP BY KB.HEIGHT',
+exports.getGroupedTransactionsPerKeyBlockFromLast24h = (onSucceedCallback, timeFrameUnit, timeFrameUnitQuantity) => {
+  let timeFrame = `'${timeFrameUnitQuantity} ${timeFrameUnit}'`;
+  db.pool.query(`SELECT KB.HEIGHT, COUNT (AET) FROM KEY_BLOCK KB LEFT JOIN MICRO_BLOCK MB ON MB.KEY_BLOCK_HASH = KB.HASH LEFT JOIN AE_TRANSACTION AET ON AET.MICRO_BLOCK_HASH = MB.HASH WHERE KB.NETWORK_ID = $1 AND KB.time >= NOW() - ${timeFrame}::INTERVAL GROUP BY KB.HEIGHT`,
     [global.properties.networkId], (err, res) => {
       if (err) {
         console.log('Getting grouped transactions per key block from last 24h failed!', err);

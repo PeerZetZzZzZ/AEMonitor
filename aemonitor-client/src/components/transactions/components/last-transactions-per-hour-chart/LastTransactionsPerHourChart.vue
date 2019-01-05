@@ -6,13 +6,20 @@
 <script>
   import Chart from 'chart.js';
   import moment from 'moment/min/moment.min';
-  import { formatDateToShortReadableFormatHours } from '../../../../api/utils/date-format-service';
+  import {
+    formatDateToDayMonthYear,
+    formatDateToShortReadableFormatHours
+  } from '../../../../api/utils/date-format-service';
   import ChartMixin from '../../../../mixins/chart-mixin';
 
   export default {
     name: 'last-transactions-per-hour-chart',
     mixins: [ChartMixin],
     props: {
+      timeFrame: {
+        type: Object,
+        required: true,
+      },
       last24hTransactionTimes: {
         type: Array,
         required: true,
@@ -20,6 +27,32 @@
     },
     watch: {
       last24hTransactionTimes() {
+        switch(this.timeFrame.chartDisplayType) {
+          case 'hour':
+            this.splitTransactionsPerHourAndUpdateChart();
+            break;
+          case 'day':
+            this.splitTransactionsPerDayAndUpdateChart();
+        }
+      }
+    },
+    methods: {
+      splitTransactionsPerDayAndUpdateChart() {
+        let perDayMap = new Map();
+        this.last24hTransactionTimes.forEach(lastTransactionTime => {
+          const roundedTimeToDayBottom = formatDateToDayMonthYear(moment(lastTransactionTime).startOf('day'));
+          let transactionsForThisHourCount = perDayMap.has(roundedTimeToDayBottom) ? (perDayMap.get(roundedTimeToDayBottom) + 1) : 1;
+          perDayMap.set(roundedTimeToDayBottom, transactionsForThisHourCount);
+        });
+        const keysAsArray = Array.from(perDayMap.keys());
+        keysAsArray.sort((a, b) => new Date(a) - new Date(b));
+        const valuesAsArray = [];
+        keysAsArray.forEach(key => {
+          valuesAsArray.push(perDayMap.get(key));
+        });
+        this.updateChart(keysAsArray, valuesAsArray);
+      },
+      splitTransactionsPerHourAndUpdateChart() {
         let perHourMap = new Map();
         const nowRoundedBottomToHour = moment().startOf('hour');
         perHourMap.set(formatDateToShortReadableFormatHours(nowRoundedBottomToHour), 0);
@@ -38,9 +71,7 @@
           valuesAsArray.push(perHourMap.get(key));
         });
         this.updateChart(keysAsArray, valuesAsArray);
-      }
-    },
-    methods: {
+      },
       createChart(labels, data) {
         const aspectRatio = this.chartsAspectRatio;
         var ctx = document.getElementById('lastTransactionsPerHourChartId');
@@ -69,7 +100,7 @@
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: 'Hours',
+                  labelString: 'Time',
                   fontFamily: 'Roboto',
                   fontColor: '#F7296E',
                   fontSize: 15,

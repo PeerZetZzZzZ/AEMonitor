@@ -7,7 +7,7 @@
                         <i class="random icon"></i> {{last24hTransactionQuantity}}
                     </div>
                     <div class="label">
-                        Transactions done [Last 24h]
+                        Transactions done [{{timeFrame.name}}]
                     </div>
                 </div>
             </div>
@@ -16,10 +16,10 @@
             <div class="sixteen wide column">
                 <div class="ui statistic" :class="isMobile ? 'tiny' : 'small'">
                     <div class="value">
-                        <i class="retweet icon"></i> {{Number(last24hAvgTransactionsPerGeneration).toFixed(1)}}
+                        <i class="retweet icon"></i> {{Number(last24hAvgTransactionsPerGeneration).toFixed(2)}}
                     </div>
                     <div class="label">
-                        Avg trans. / generation [Last 24h]
+                        Avg trans. / generation [{{timeFrame.name}}]
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <i class="money bill alternate icon"></i> {{last24hAvgTransactionFee}} AE
                     </div>
                     <div class="label">
-                        Avg fee [Last 24h]
+                        Avg fee [{{timeFrame.name}}]
                     </div>
                 </div>
             </div>
@@ -45,6 +45,10 @@
   export default {
     name: 'transactions-statistics',
     props: {
+      timeFrame: {
+        type: Object,
+        required: true,
+      },
       last24hTransactionTimes: {
         type: Array,
         required: true,

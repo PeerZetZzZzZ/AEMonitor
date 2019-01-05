@@ -15,6 +15,9 @@ export default {
       last24hTransactionTypes: [],
       last24hAvgTransactionFee: '0',
       last24hAvgTransactionsPerGeneration: 0,
+      onTransactionTimeframeChangeCallback: () => {
+      },
+      timeFrame: properties.timeFrame24h,
     };
   },
   methods: {
@@ -24,18 +27,27 @@ export default {
       getLastTransactions().subscribe((res) => {
         this.lastTransactions = res.data;
       });
-      getLast24hTransactionTimes().subscribe((res) => {
+      this.getTimeFramedData();
+    },
+    getTimeFramedData() {
+      getLast24hTransactionTimes(this.timeFrame.value).subscribe((res) => {
         this.last24hTransactionTimes = res.data;
       });
-      getLast24hTransactionTypes().subscribe((res) => {
+      getLast24hTransactionTypes(this.timeFrame.value).subscribe((res) => {
         this.last24hTransactionTypes = res.data;
       });
-      getLast24hAvgTransactionFee().subscribe((res) => {
+      getLast24hAvgTransactionFee(this.timeFrame.value).subscribe((res) => {
         this.last24hAvgTransactionFee = this.toAe(res.data.avgFee);
       });
-      getLast24hAvgTransactionsPerGeneration().subscribe((res) => {
+      getLast24hAvgTransactionsPerGeneration(this.timeFrame.value).subscribe((res) => {
         this.last24hAvgTransactionsPerGeneration = res.data.last24hAvgTransactionsPerGeneration;
-      })
-    },
+      });
+    }
+  },
+  mounted() {
+    this.onTransactionTimeframeChangeCallback = (newTimeFrame) => {
+      this.timeFrame = newTimeFrame;
+      this.getTimeFramedData();
+    }
   },
 }

@@ -16,7 +16,6 @@
     },
     watch: {
       last24hMinersPercentage() {
-        console.log(this.last24hMinersPercentage);
         const labels = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.beneficiary);
         const data = this.last24hMinersPercentage.map(minerStatistics => minerStatistics.minedPercentage.toPrecision(4));
         this.updateChart(labels, data);

@@ -33,7 +33,7 @@
 @menuTextAlign: left;
 
 @menuBorderWidth: 1px;
-@menuBorderColor: @borderColor;
+@menuBorderColor: @aeExciting;
 @menuBorder: @menuBorderWidth solid @menuBorderColor;
 @menuBoxShadow: @raisedShadow;
 @menuBorderRadius: @borderRadius;
@@ -152,7 +152,7 @@
 @selectionTextUnderlayColor: @inputPlaceholderFocusColor;
 
 @selectionBoxShadow: none;
-@selectionBorderColor: @borderColor;
+@selectionBorderColor: @aeExciting;
 @selectionBorder: 1px solid @selectionBorderColor;
 @selectionBorderRadius: @borderRadius;
 
@@ -284,7 +284,7 @@
 @hoveredZIndex: @menuZIndex + 2;
 
 /* Default Text */
-@defaultTextColor: @inputPlaceholderColor;
+@defaultTextColor: @aeExciting;
 @defaultTextFocusColor: @inputPlaceholderFocusColor;
 
 /* Loading */

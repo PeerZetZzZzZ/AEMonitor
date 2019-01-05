@@ -1,9 +1,14 @@
 <template>
     <div class="ui stackable padded middle aligned grid insideGrid">
         <div class="row borderedRow">
-            <div class="sixteen wide column">
+            <div class="sixteen center aligned wide column">
                 <h1 class="ui centered header transactionStatsFont">Transactions stats</h1>
+                <transactions-stats-timeframe-dropdown
+                        :on-value-change-callback="onTransactionTimeframeChangeCallback"
+                        style="margin-bottom: 2%;">
+                </transactions-stats-timeframe-dropdown>
                 <transactions-statistics
+                        :time-frame="timeFrame"
                         :last24h-transaction-times="last24hTransactionTimes"
                         :last24h-avg-transaction-fee="last24hAvgTransactionFee"
                         :last24h-avg-transactions-per-generation="last24hAvgTransactionsPerGeneration"
@@ -12,13 +17,16 @@
         </div>
         <div class="row borderedRow">
             <div class="sixteen wide column">
-                <h2 class="ui header">Transactions done [Last 24h]</h2>
-                <last-transactions-per-hour-chart :last24h-transaction-times="last24hTransactionTimes"></last-transactions-per-hour-chart>
+                <h2 class="ui header">Transactions done [{{timeFrame.name}}]</h2>
+                <last-transactions-per-hour-chart
+                        :time-frame="timeFrame"
+                        :last24h-transaction-times="last24hTransactionTimes">
+                </last-transactions-per-hour-chart>
             </div>
         </div>
         <div class="row borderedRow">
             <div class="sixteen wide column">
-                <h2>Transaction types [Last 24h]</h2>
+                <h2 class="ui header">Transaction types [{{timeFrame.name}}]</h2>
                 <transaction-types-chart :last24h-transaction-types="last24hTransactionTypes"></transaction-types-chart>
             </div>
         </div>
@@ -38,11 +46,14 @@
   import TransactionTypesChart from './components/transaction-types-chart/TransactionTypesChart';
   import TransactionsViewMobile from './TransactionsViewMobile';
   import TransactionsViewPc from './TransactionsViewPc';
+  import TransactionsStatsTimeframeDropdown
+    from './components/transactions-done-timeframe-dropdown/TransactionsStatsTimeframeDropdown';
 
   export default {
     name: 'transactions-view-mobile',
     mixins: [TransactionsMixin],
     components: {
+      TransactionsStatsTimeframeDropdown,
       TransactionsViewPc,
       TransactionsViewMobile,
       TransactionTypesChart,
