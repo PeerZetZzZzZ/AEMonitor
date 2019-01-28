@@ -25,15 +25,17 @@ Core stats:
 - block difficulty
 - block reward
 - last transactions (last block)
+- avg block mine time [last 1h]
+
 
 Transactions stats: 
-- avg block mine time [last 1h]
+- 'timeframe' switch - 1h, 24h, 7d, 1m
 - last transactions table [last 20]
-- transactions done count per hour chart [last 24h]
-- transactions per type chart [last 24h]
-- transactions done count [last 24h]
-- avg fee [last 24h]
-- avg transactions per generation [last 24h]
+- transactions done count per hour chart [from last 'timeframe']
+- transactions per type chart [last 'timeframe']
+- transactions done count [last 'timeframe']
+- avg fee [last 'timeframe']
+- avg transactions per generation [last 'timeframe']
 
 Token stats:
 - AE token exchanges stats table (currently Binance, Bithumb, Gate.io, Uex)
