@@ -1,5 +1,5 @@
 <template>
-    <div class="ui selection dropdown">
+    <div class="ui selection dropdown transactionsTimeframe">
         <input type="hidden" name="gender">
         <i class="dropdown icon"></i>
         <div class="default text">Last 24h</div>
@@ -15,7 +15,7 @@
         },
       },
       mounted() {
-        $('.ui.dropdown').dropdown({
+        $('.ui.dropdown.transactionsTimeframe').dropdown({
           values: [
             properties.timeFrame1h,
             {

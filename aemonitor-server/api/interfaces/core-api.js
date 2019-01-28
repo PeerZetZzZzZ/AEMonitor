@@ -3,12 +3,12 @@ const AeReadRepository = require('../domain/repository/ae-read-repository');
 const AeApiFacadeService = require('../domain/services/ae-api-facade-service');
 const BlockRewardsRepository = require('../domain/repository/block-rewards-repository');
 
-app.express.get('/api/getLastKeyBlocks', (req, res) => {
-  AeReadRepository.getLastKeyBlocks(global.properties.lastKeyBlocksCount, (keyBlockRows) => {
+app.express.get('/api/:networkId/getLastKeyBlocks', (req, res) => {
+  AeReadRepository.getLastKeyBlocks(req.params.networkId, global.properties.lastKeyBlocksCount, (keyBlockRows) => {
     const keyBlocksHeightArray = keyBlockRows.map(row => Number(row.height));
     const keyBlocksHashArray = keyBlockRows.map(row => row.hash);
-    AeReadRepository.getMicroBlocksCountForGivenBlocksHashArray(keyBlocksHashArray, (microBlockRows) => {
-      AeReadRepository.getTransactionsCountOfGivenBlocksHeight(keyBlocksHeightArray, (transactionsCountRowsPerMicroBlock) => {
+    AeReadRepository.getMicroBlocksCountForGivenBlocksHashArray(req.params.networkId, keyBlocksHashArray, (microBlockRows) => {
+      AeReadRepository.getTransactionsCountOfGivenBlocksHeight(req.params.networkId, keyBlocksHeightArray, (transactionsCountRowsPerMicroBlock) => {
         keyBlockRows.forEach(keyBlockRow => {
           const transactionsCountRowsForGivenMicroBlock = transactionsCountRowsPerMicroBlock
             .filter(transactionsCountRowsPerMicroBlockRow => transactionsCountRowsPerMicroBlockRow.block_height === keyBlockRow.height);
@@ -22,8 +22,8 @@ app.express.get('/api/getLastKeyBlocks', (req, res) => {
   })
 });
 
-app.express.get('/api/getLast24hMinersPercentage', (req, res) => {
-  AeReadRepository.getBlocksMinedByMinersWithinLast24hOrderedDesc((rows) => {
+app.express.get('/api/:networkId/getLast24hMinersPercentage', (req, res) => {
+  AeReadRepository.getBlocksMinedByMinersWithinLast24hOrderedDesc(req.params.networkId,(rows) => {
     let totalKeyBlocksMinedWithinLast24h = 0;
     rows.forEach(row => totalKeyBlocksMinedWithinLast24h += Number(row.count));
     let totalBlocksMinedByBest = 0;
@@ -46,8 +46,8 @@ app.express.get('/api/getLast24hMinersPercentage', (req, res) => {
   })
 });
 
-app.express.get('/api/getBlockDifficulty', async (req, res) => {
-  const status = await AeApiFacadeService.get('/status');
+app.express.get('/api/:networkId/getBlockDifficulty', async (req, res) => {
+  const status = await AeApiFacadeService.get(req.params.networkId, '/status');
   res.send({difficulty: status.data.difficulty});
 });
 
@@ -62,8 +62,8 @@ app.express.get('/api/getBlockReward/:blockNumber', (req, res) => {
   res.send({blockReward: blockReward});
 });
 
-app.express.get('/api/getLast1hAvgBlockTime', (req, res) => {
-  AeReadRepository.getCountKeyBlocksFromLastHour((rows) => {
+app.express.get('/api/:networkId/getLast1hAvgBlockTime', (req, res) => {
+  AeReadRepository.getCountKeyBlocksFromLastHour(req.params.networkId,(rows) => {
     const blockCount = Number(rows[0].count);
     res.send({last1hAvgBlockTime: blockCount > 0 ? (60 / blockCount) : 0});
   });

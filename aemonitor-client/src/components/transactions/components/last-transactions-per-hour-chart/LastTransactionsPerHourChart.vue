@@ -28,11 +28,15 @@
     watch: {
       last24hTransactionTimes() {
         switch(this.timeFrame.chartDisplayType) {
+          case 'minute':
+            this.splitTransactionsPerMinuteAndUpdateChart();
+            break;
           case 'hour':
             this.splitTransactionsPerHourAndUpdateChart();
             break;
           case 'day':
             this.splitTransactionsPerDayAndUpdateChart();
+            break;
         }
       }
     },
@@ -45,10 +49,30 @@
           perDayMap.set(roundedTimeToDayBottom, transactionsForThisHourCount);
         });
         const keysAsArray = Array.from(perDayMap.keys());
-        keysAsArray.sort((a, b) => new Date(a) - new Date(b));
+        keysAsArray.sort((a, b) => moment(a,'DD-MM-YYYY') - moment(b, 'DD-MM-YYYY'));
         const valuesAsArray = [];
         keysAsArray.forEach(key => {
           valuesAsArray.push(perDayMap.get(key));
+        });
+        this.updateChart(keysAsArray, valuesAsArray);
+      },
+      splitTransactionsPerMinuteAndUpdateChart() {
+        let perMinuteMap = new Map();
+        const nowRoundedBottomToMinute = moment().startOf('minute');
+        perMinuteMap.set(formatDateToShortReadableFormatHours(nowRoundedBottomToMinute), 0);
+        for (let i = 0; i < 59; i++) {
+          perMinuteMap.set(formatDateToShortReadableFormatHours(nowRoundedBottomToMinute.subtract({minute: 1})), 0);
+        }
+        this.last24hTransactionTimes.forEach(lastTransactionTime => {
+          const roundedTimeToHourMinute = formatDateToShortReadableFormatHours(moment(lastTransactionTime).startOf('minute'));
+          const transactionsForThisHourCount = perMinuteMap.get(roundedTimeToHourMinute) + 1;
+          perMinuteMap.set(roundedTimeToHourMinute, transactionsForThisHourCount);
+        });
+        const keysAsArray = Array.from(perMinuteMap.keys());
+        keysAsArray.sort((a, b) => new Date(a) - new Date(b));
+        const valuesAsArray = [];
+        keysAsArray.forEach(key => {
+          valuesAsArray.push(perMinuteMap.get(key));
         });
         this.updateChart(keysAsArray, valuesAsArray);
       },

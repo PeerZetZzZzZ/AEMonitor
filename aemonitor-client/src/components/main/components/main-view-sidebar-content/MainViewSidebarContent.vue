@@ -13,9 +13,10 @@
             {{menuEntry.label}}
         </a>
         <div class="footerItem">
+            <span class="whiteFont"><i class="globe icon" style="color: lime"></i>Network: <b>{{networkId}}</b></span><br>
             <span class="whiteFont">Next refresh: {{refreshSecondsIntervalLiveCounter}}s</span><br>
             <span class="whiteFont">Refresh every: {{refreshSecondsInterval}}s</span><br>
-            <span class="whiteFont" style="font-size: 0.8rem;"><span style="color: var(--colorDramatic);">Made by:</span> Przemysław Thomann <a target="_blank" href="https://mobycrypt.com">mobycrypt.com</a></span> <br>
+            <span class="whiteFont" style="font-size: 0.8rem;"><span style="color: var(--colorDramatic);">Made by:</span><a target="_blank" href="https://pthomann.pl"> Przemysław Thomann </a></span> <br>
         </div>
     </div>
 </template>
@@ -85,6 +86,11 @@
       '$route'() {
         this.refreshSecondsIntervalLiveCounter = this.refreshSecondsInterval;
       }
+    },
+    computed: {
+      networkId() {
+        return this.$store.state.networkId;
+      },
     },
   };
 </script>

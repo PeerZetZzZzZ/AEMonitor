@@ -2,8 +2,8 @@ const {Universal: Ae} = require('@aeternity/aepp-sdk');
 const AeSaveRepository = require('../repository/ae-save-repository');
 const AeReadRepository = require('../repository/ae-read-repository');
 
-const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHeightCounter, onFinishCallback) => {
-  AeReadRepository.getMaxSavedKeyBlockHeight(async (rows) => {
+const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHeightCounter, networkId, onFinishCallback) => {
+  AeReadRepository.getMaxSavedKeyBlockHeight(networkId,async (rows) => {
     console.log('[AEMonitor Server STARTUP] Starting processing all blocks between last saved and current.', );
     if (rows[0].max !== null || global.properties.fetchWholeBlockchainOnStartWhenEmptyDb) {
       const maxSavedBlockHeight = rows[0].max !== null ? Number(rows[0].max) : 1;
@@ -15,7 +15,7 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
       }
       for (let height = maxSavedBlockHeight; height < currentHeight; height++) {
         const generation = await ae.getGeneration(height);
-        processBlocksAndTransactionsOfGeneration(ae, generation);
+        processBlocksAndTransactionsOfGeneration(ae, generation, networkId);
         aeMonitorBlockHeightCounter = height;
       }
       console.log(`[AEMonitor Server STARTUP] Finished processing all blocks between last saved and current. AEMonitor db is up to date now.`);
@@ -26,14 +26,14 @@ const processAllNotSavedBlocksBetweenLastSavedAndCurrent = (ae, aeMonitorBlockHe
   });
 };
 
-const processBlocksAndTransactionsOfGeneration = (ae, generation) => {
-  AeSaveRepository.saveKeyBlock(generation.keyBlock, ()=> {
+const processBlocksAndTransactionsOfGeneration = (ae, generation, networkId) => {
+  AeSaveRepository.saveKeyBlock(networkId, generation.keyBlock, ()=> {
     generation.microBlocks.forEach(async microBlockHeaderString => {
       const microBlockHeader = await ae.getMicroBlockHeader(microBlockHeaderString);
-      AeSaveRepository.saveMicroBlock(microBlockHeader, generation.keyBlock.hash, async () => {
+      AeSaveRepository.saveMicroBlock(networkId, microBlockHeader, generation.keyBlock.hash, async () => {
         const microBlockTransactions = await ae.getMicroBlockTransactions(microBlockHeader.hash);
         microBlockTransactions.forEach(microBlockTransaction => {
-          AeSaveRepository.saveMicroBlockTransaction(microBlockTransaction, microBlockHeader.hash);
+          AeSaveRepository.saveMicroBlockTransaction(networkId, microBlockTransaction, microBlockHeader.hash);
         });
       });
     });
@@ -50,22 +50,25 @@ const processBlocksAndTransactionsOfGeneration = (ae, generation) => {
  *    If current generation changes (new block) once again check previous generation to assure all its micro blocks
  *    and transactions were saved. After it fetch newest generation and save newest generation blocks.
  */
-Ae({
-  url: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`,
-  internalUrl: `${global.properties.aeNodeUrl}:${global.properties.aeNodePort}`
-}).then(async ae => {
-  let aeMonitorBlockHeightCounter = await ae.height();
-  processAllNotSavedBlocksBetweenLastSavedAndCurrent(ae, aeMonitorBlockHeightCounter, () => {
-    setInterval(async () => {
-      const currentBlockHeight = await ae.height();
-      console.log(`[AEMonitor Server] Current block height: ${currentBlockHeight}.`);
-      if (currentBlockHeight > aeMonitorBlockHeightCounter) {
-        console.log(`[AEMonitor Server] New block mined. Getting and saving block height ${aeMonitorBlockHeightCounter} generation.`);
-        const currentGeneration = await ae.getGeneration(aeMonitorBlockHeightCounter);
-        processBlocksAndTransactionsOfGeneration(ae, currentGeneration);
-        console.log(`[AEMonitor Server] Saved generation of block height ${aeMonitorBlockHeightCounter}. Waiting for block ${aeMonitorBlockHeightCounter + 1}.`);
-        aeMonitorBlockHeightCounter = currentBlockHeight;
-      }
-    }, global.properties.checkBlockchainIntervalMillisecs)
+global.properties.networks.forEach(network => {
+  Ae({
+    url: `${network.aeNodeUrl}:${network.aeNodePort}`,
+    internalUrl: `${network.aeNodeUrl}:${network.aeNodePort}`
+  }).then(async ae => {
+    console.log(`[AEMonitor Server] Starting for network ${network.networkId}`);
+    let aeMonitorBlockHeightCounter = await ae.height();
+    processAllNotSavedBlocksBetweenLastSavedAndCurrent(ae, aeMonitorBlockHeightCounter, network.networkId, () => {
+      setInterval(async () => {
+        const currentBlockHeight = await ae.height();
+        console.log(`[AEMonitor Server ${network.networkId}] Current block height: ${currentBlockHeight}.`);
+        if (currentBlockHeight > aeMonitorBlockHeightCounter) {
+          console.log(`[AEMonitor Server ${network.networkId}] New block mined. Getting and saving block height ${aeMonitorBlockHeightCounter} generation.`);
+          const currentGeneration = await ae.getGeneration(aeMonitorBlockHeightCounter);
+          processBlocksAndTransactionsOfGeneration(ae, currentGeneration, network.networkId);
+          console.log(`[AEMonitor Server ${network.networkId}] Saved generation of block height ${aeMonitorBlockHeightCounter}. Waiting for block ${aeMonitorBlockHeightCounter + 1}.`);
+          aeMonitorBlockHeightCounter = currentBlockHeight;
+        }
+      }, network.checkBlockchainIntervalMillisecs)
+    });
   });
 });

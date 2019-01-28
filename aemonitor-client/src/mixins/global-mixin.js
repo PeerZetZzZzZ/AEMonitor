@@ -38,5 +38,5 @@ export default {
     chartsAspectRatio() {
       return this.isMobile ? 1 : 2;
     },
-  }
+  },
 }

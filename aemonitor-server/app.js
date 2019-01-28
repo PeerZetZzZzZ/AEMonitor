@@ -12,7 +12,6 @@ exports.express = app;
 require('./api/domain/services/scheduled-ae-blocks-checker');
 require('./api/domain/services/scheduled-token-exchanges-checker');
 require('./api/interfaces/core-api');
-require('./api/interfaces/general-api');
 require('./api/interfaces/transactions-api');
 require('./api/interfaces/token-api');
 

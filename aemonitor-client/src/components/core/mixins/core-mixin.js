@@ -22,19 +22,19 @@ export default {
     //RefetchMixin
     dataFetch() {
       console.log('Fetching core data.');
-      getLastKeyBlocks().subscribe((res) => {
+      getLastKeyBlocks(this.$store.state.networkId).subscribe((res) => {
         this.lastKeyBlocks = res.data;
         getBlockReward(this.lastKeyBlocks[0].height).subscribe((res) => {
           this.blockReward = res.data.blockReward;
         });
       });
-      getBlockDifficulty().subscribe((res) => {
+      getBlockDifficulty(this.$store.state.networkId).subscribe((res) => {
         this.blockDifficulty = res.data.difficulty;
       });
-      getLast1hAvgBlockTime().subscribe((res) => {
+      getLast1hAvgBlockTime(this.$store.state.networkId).subscribe((res) => {
         this.last1hAvgBlockTime = res.data.last1hAvgBlockTime;
       });
-      getLast24hMinersPercentage().subscribe((res) => {
+      getLast24hMinersPercentage(this.$store.state.networkId).subscribe((res) => {
         this.last24hMinersPercentage = res.data;
       });
     },

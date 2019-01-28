@@ -1,5 +1,6 @@
 const axios = require('axios');
 
-exports.get = (url) => {
-  return axios.get(`${global.properties.aeNodeUrl}:${global.properties.aeNodePort}/v2${url}`);
+exports.get = (networkId, url) => {
+  const network = global.properties.networks.filter(network => network.networkId === networkId)[0];
+  return axios.get(`${network.aeNodeUrl}:${network.aeNodePort}/v2${url}`);
 };

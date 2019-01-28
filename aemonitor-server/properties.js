@@ -1,17 +1,21 @@
 global.properties = {
   aeMonitorServerPort: 6789,
 
-  //Aeternity network settings
-  //CHANGE IT!!!
-  // When:
-  // - main net network -> MAINNET
-  // - test net network -> TESTNET
-  // - edge net network -> TESTNET
-  networkId: 'MAINNET',
   // aeNodeUrl: 'https://sdk-testnet.aepps.com',
-  aeNodeUrl: 'https://roma-net.aepps.com',
-  aeNodePort: 443,
-
+  networks: [
+    {
+      networkId: 'MAINNET',
+      aeNodeUrl: 'https://roma-net.aepps.com',
+      aeNodePort: 443,
+      checkBlockchainIntervalMillisecs: 20000, //every 20 seconds,
+    },
+    {
+      networkId: 'TESTNET',
+      aeNodeUrl: 'https://sdk-testnet.aepps.com',
+      aeNodePort: 443,
+      checkBlockchainIntervalMillisecs: 20000, //every 20 seconds,
+    }
+  ],
   //Database postgres settings
   postgresUser: 'postgres',
   postgresHost: 'localhost',
@@ -20,7 +24,6 @@ global.properties = {
   postgresPort: 5432,
 
   //AEMonitor specific settings
-  checkBlockchainIntervalMillisecs: 20000, //every 20 seconds,
   checkExchangesIntervalMillisecs: 20000, //every 20 seconds,
   lastTransactionsCount: 20,
   lastKeyBlocksCount: 20,

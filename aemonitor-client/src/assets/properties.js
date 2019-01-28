@@ -3,7 +3,7 @@ window.properties = {
   timeFrame1h: {
     name: 'Last 1h',
     value: '1h',
-    chartDisplayType: 'hour',
+    chartDisplayType: 'minute',
   },
   timeFrame24h: {
     name: 'Last 24h',
@@ -20,4 +20,6 @@ window.properties = {
     value: '1m',
     chartDisplayType: 'day',
   },
+  networkIdMainnet: 'MAINNET',
+  networkIdTestnet: 'TESTNET',
 };

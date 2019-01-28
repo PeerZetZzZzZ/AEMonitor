@@ -1,6 +1,6 @@
 const db = require('../../application/db/db');
 
-exports.saveKeyBlock = (aeKeyBlockObject, onSucceedCallback) => {
+exports.saveKeyBlock = (networkId, aeKeyBlockObject, onSucceedCallback) => {
   db.pool.query('INSERT INTO KEY_BLOCK(HASH, HEIGHT, MINER, NONCE, PREV_HASH, PREV_KEY_HASH, STATE_HASH, TARGET, BENEFICIARY, TIME, VERSION, NETWORK_ID) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) ON CONFLICT DO NOTHING',
     [aeKeyBlockObject.hash,
       aeKeyBlockObject.height,
@@ -13,19 +13,19 @@ exports.saveKeyBlock = (aeKeyBlockObject, onSucceedCallback) => {
       aeKeyBlockObject.beneficiary,
       new Date(aeKeyBlockObject.time),
       aeKeyBlockObject.version,
-      global.properties.networkId],
+      networkId],
     (err) => {
       if (err) {
         console.log(`Failed to insert key block with number ${aeKeyBlockObject.height}!`, err);
       } else {
-        console.log(`Inserted (if not yet existed) new save key block with number ${aeKeyBlockObject.height}`);
+        console.log(`[${networkId}] Inserted (if not yet existed) new save key block with number ${aeKeyBlockObject.height}`);
         onSucceedCallback();
       }
     }
   )
 };
 
-exports.saveMicroBlock = (aeMicroBlockObject, keyBlockHash, onSucceedCallback) => {
+exports.saveMicroBlock = (networkId, aeMicroBlockObject, keyBlockHash, onSucceedCallback) => {
   db.pool.query('INSERT INTO MICRO_BLOCK(HASH, KEY_BLOCK_HASH, HEIGHT, POF_HASH, PREV_HASH, PREV_KEY_HASH, SIGNATURE, TXS_HASH, TIME, VERSION, NETWORK_ID) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) ON CONFLICT DO NOTHING',
     [aeMicroBlockObject.hash,
       keyBlockHash,
@@ -37,19 +37,19 @@ exports.saveMicroBlock = (aeMicroBlockObject, keyBlockHash, onSucceedCallback) =
       aeMicroBlockObject.txsHash,
       new Date(aeMicroBlockObject.time),
       aeMicroBlockObject.version,
-      global.properties.networkId],
+      networkId],
     (err) => {
       if (err) {
         console.log(`Failed to insert micro block with number ${aeMicroBlockObject.height}!`, err);
       } else {
         onSucceedCallback();
-        console.log(`Inserted (if not yet existed) new save micro block with number ${aeMicroBlockObject.height}`);
+        console.log(`[${networkId}] Inserted (if not yet existed) new save micro block with number ${aeMicroBlockObject.height}`);
       }
     }
   )
 };
 
-exports.saveMicroBlockTransaction = (aeTransactionObject, microBlockHash) => {
+exports.saveMicroBlockTransaction = (networkId, aeTransactionObject, microBlockHash) => {
   db.pool.query(`INSERT INTO AE_TRANSACTION(HASH, MICRO_BLOCK_HASH, BLOCK_HEIGHT, AMOUNT, DEPOSIT, CALL_DATA, CALLER_ID, OWNER_ID, CONTRACT_ID, CODE, SENDER_ID, RECIPIENT_ID, FEE, GAS, GAS_PRICE, TYPE, VERSION, NONCE, VM_VERSION, NETWORK_ID) 
               VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) ON CONFLICT DO NOTHING`,
     [aeTransactionObject.hash,
@@ -71,12 +71,12 @@ exports.saveMicroBlockTransaction = (aeTransactionObject, microBlockHash) => {
       aeTransactionObject.tx.version,
       aeTransactionObject.tx.nonce,
       aeTransactionObject.tx.vmVersion,
-      global.properties.networkId],
+      networkId],
     (err) => {
       if (err) {
         console.log(`Failed to insert transaction with hash ${aeTransactionObject.hash}!`, err);
       } else {
-        console.log(`Inserted (if not yet existed) new transaction with hash ${aeTransactionObject.hash}`);
+        console.log(`[${networkId}] Inserted (if not yet existed) new transaction with hash ${aeTransactionObject.hash}`);
       }
     }
   )

@@ -24,22 +24,22 @@ export default {
     //RefetchMixin
     dataFetch() {
       console.log('Fetching transactions data.');
-      getLastTransactions().subscribe((res) => {
+      getLastTransactions(this.$store.state.networkId).subscribe((res) => {
         this.lastTransactions = res.data;
       });
       this.getTimeFramedData();
     },
     getTimeFramedData() {
-      getLast24hTransactionTimes(this.timeFrame.value).subscribe((res) => {
+      getLast24hTransactionTimes(this.$store.state.networkId, this.timeFrame.value).subscribe((res) => {
         this.last24hTransactionTimes = res.data;
       });
-      getLast24hTransactionTypes(this.timeFrame.value).subscribe((res) => {
+      getLast24hTransactionTypes(this.$store.state.networkId, this.timeFrame.value).subscribe((res) => {
         this.last24hTransactionTypes = res.data;
       });
-      getLast24hAvgTransactionFee(this.timeFrame.value).subscribe((res) => {
+      getLast24hAvgTransactionFee(this.$store.state.networkId, this.timeFrame.value).subscribe((res) => {
         this.last24hAvgTransactionFee = this.toAe(res.data.avgFee);
       });
-      getLast24hAvgTransactionsPerGeneration(this.timeFrame.value).subscribe((res) => {
+      getLast24hAvgTransactionsPerGeneration(this.$store.state.networkId, this.timeFrame.value).subscribe((res) => {
         this.last24hAvgTransactionsPerGeneration = res.data.last24hAvgTransactionsPerGeneration;
       });
     }
