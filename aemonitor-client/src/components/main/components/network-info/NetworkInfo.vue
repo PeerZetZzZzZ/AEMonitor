@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="default text" style="color: white"><b>Network</b></div>
-        <div class="ui selection dropdown networkInfo">
+        <div class="ui selection dropdown fluid networkInfo">
             <input type="hidden" name="gender">
             <i class="dropdown icon"></i>
             <div class="default text">{{networkId}}</div>

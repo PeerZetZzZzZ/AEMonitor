@@ -11,7 +11,8 @@
         </thead>
         <tbody>
         <tr v-for="keyBlock in lastKeyBlocks" :class="{positive: keyBlock.transactionsCount > 0}">
-            <td class="collapsing"><a class="tableLinkFont" :href="`https://explorer.aepps.com/#/generation/${keyBlock.height}`" target="_blank">{{keyBlock.height}}</a></td>
+            <td class="collapsing" v-if="isMainnet"><a class="tableLinkFont" :href="`https://explorer.aepps.com/#/generation/${keyBlock.height}`" target="_blank">{{keyBlock.height}}</a></td>
+            <td class="collapsing" v-else><a class="tableLinkFont" :href="`https://testnet.explorer.aepps.com/#/generation/${keyBlock.height}`" target="_blank">{{keyBlock.height}}</a></td>
             <td>{{formatDate(new Date(keyBlock.time))}}</td>
             <td><span :class="{ 'mobileFont': isMobile}" >{{keyBlock.beneficiary}}</span></td>
             <td>{{keyBlock.microBlocksCount}}</td>

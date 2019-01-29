@@ -11,7 +11,9 @@
         </thead>
         <tbody>
         <tr v-for="transaction in lastTransactions">
-            <td class="collapsing"><a :class="{ 'mobileFont': isMobile}" class="tableLinkFont" :href="`https://explorer.aepps.com/#/tx/${transaction.hash}`" target="_blank">{{transaction.hash}}</a></td>
+            <td class="collapsing">
+                <a @click="goToTransactionView(transaction)" :class="{ 'mobileFont': isMobile}" class="tableLinkFont cursorPointer"> {{transaction.hash}} </a>
+            </td>
             <td class="collapsing">{{transaction.block_height}}</td>
             <td class="collapsing">{{toAe(transaction.amount)}} AE</td>
             <td class="collapsing">{{toAe(transaction.fee)}} AE</td>
@@ -30,40 +32,9 @@
       },
     },
     methods: {
-      getLabelClass(transactionType) {
-        switch(transactionType) {
-          case this.transactionTypes.transactionContractCallTx:
-            return 'ui brown label';
-          case this.transactionTypes.transactionContractCreateTx:
-            return 'ui blue label';
-          case this.transactionTypes.transactionSpendTx:
-            return 'ui violet label';
-          case this.transactionTypes.transactionNamePreclaimTx:
-            return 'ui olive label';
-          case this.transactionTypes.transactionNameClaimTx:
-            return 'ui teal label';
-          case this.transactionTypes.transactionNameUpdateTx:
-            return 'ui purple label';
-          case this.transactionTypes.transactionOracleRegisterTx:
-            return 'ui red label';
-          case this.transactionTypes.transactionOracleExtendTx:
-            return 'ui orange label';
-          case this.transactionTypes.transactionOracleResponseTx:
-            return 'ui pink label';
-          case this.transactionTypes.transactionOracleQueryTx:
-            return 'ui grey label';
-          case this.transactionTypes.transactionChannelCreateTx:
-            return 'ui black label';
-          case this.transactionTypes.transactionChannelCloseMutualTx:
-            return 'ui yellow label';
-          case this.transactionTypes.transactionChannelSettleTx:
-            return 'ui navyLabel label';
-          case this.transactionTypes.transactionChannelCloseSoloTx:
-            return 'ui maroonLabel label';
-          case this.transactionTypes.transactionChannelSlashTx:
-            return 'ui limeLabel label';
-        }
-      }
+      goToTransactionView(transaction) {
+        this.$router.push(`/transaction/${this.networkId}/${transaction.hash}`);
+      },
     },
   };
 </script>

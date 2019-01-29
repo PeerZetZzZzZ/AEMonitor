@@ -144,3 +144,17 @@ exports.getGroupedTransactionsPerKeyBlockFromLast24h = (networkId, onSucceedCall
       }
     });
 };
+
+exports.getTransactionInfo = (networkId, transactionHash, onSucceedCallback) => {
+  db.pool.query(`SELECT * FROM AE_TRANSACTION WHERE NETWORK_ID = $1 AND HASH = $2`,
+    [networkId,
+      transactionHash
+    ], (err, res) => {
+      if (err) {
+        console.log('Getting grouped transactions per key block from last 24h failed!', err);
+        onSucceedCallback([]);
+      } else {
+        onSucceedCallback(res.rows[0] !== undefined ? res.rows[0] : null);
+      }
+    });
+};

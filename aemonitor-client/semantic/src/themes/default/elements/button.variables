@@ -9,7 +9,7 @@
 /* Button */
 @verticalMargin: 0em;
 @horizontalMargin: 0.25em;
-@backgroundColor: #E0E1E2;
+@backgroundColor: @aeExciting;
 @backgroundImage: none;
 @background: @backgroundColor @backgroundImage;
 @lineHeight: 1em;
@@ -23,7 +23,7 @@
 @tapColor: transparent;
 @fontFamily: @pageFont;
 @fontWeight: @bold;
-@textColor: rgba(0, 0, 0, 0.6);
+@textColor: white;
 @textShadow: none;
 @invertedTextShadow: @textShadow;
 @borderRadius: @defaultBorderRadius;
@@ -84,10 +84,10 @@
 --------------------*/
 
 /* Hovered */
-@hoverBackgroundColor: #CACBCD;
+@hoverBackgroundColor: @aeExciting;
 @hoverBackgroundImage: @backgroundImage;
-@hoverBoxShadow: @boxShadow;
-@hoverColor: @hoveredTextColor;
+@hoverBoxShadow: 0px 0px 15px var(--colorExciting);;
+@hoverColor: white;
 @iconHoverOpacity: 0.85;
 
 /* Focused */

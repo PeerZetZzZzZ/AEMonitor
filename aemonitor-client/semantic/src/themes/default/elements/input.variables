@@ -18,7 +18,7 @@
 @textAlign: left;
 @background: @inputBackground;
 @borderWidth: 1px;
-@border: @borderWidth solid @borderColor;
+@border: @borderWidth solid @aeExciting;
 @boxShadow: none;
 
 @borderRadius: @defaultBorderRadius;
@@ -64,8 +64,8 @@
 --------------------*/
 
 /* Placeholder */
-@placeholderColor: @inputPlaceholderColor;
-@placeholderFocusColor: @inputPlaceholderFocusColor;
+@placeholderColor: @aeExcitingTransparentMore;
+@placeholderFocusColor: @aeExcitingTransparentVery;
 
 /* Down */
 @downBorderColor: rgba(0, 0, 0, 0.3);
@@ -74,10 +74,10 @@
 @downBoxShadow: none;
 
 /* Focus */
-@focusBorderColor: @focusedFormBorderColor;
+@focusBorderColor: @aeExciting;
 @focusBackground: @background;
-@focusColor: @hoveredTextColor;
-@focusBoxShadow: none;
+@focusColor: @aeExciting;
+@focusBoxShadow: @boxShadowExciting;
 
 /* Error */
 @errorBackground: @negativeBackgroundColor;

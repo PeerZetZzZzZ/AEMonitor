@@ -975,3 +975,6 @@
 @aeDramatic                : #F7296E;
 @aeExciting                : #311B58;
 @aeExcitingTransparent                : rgba(49, 27, 88, 0.85);
+@aeExcitingTransparentMore                : rgba(49, 27, 88, 0.65);
+@aeExcitingTransparentVery                : rgba(49, 27, 88, 0.2);
+@boxShadowExciting: 0px 0px 15px @aeExciting;

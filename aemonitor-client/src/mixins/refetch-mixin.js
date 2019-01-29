@@ -26,7 +26,6 @@ export default {
     networkId() {
       //is implemented in refetch-mixin
       this.fetchForNewNetwork();
-      console.log('networkId', this.networkId);
     },
   },
 }

@@ -40,6 +40,14 @@ app.express.get('/api/:networkId/getLast24hTransactionTimes', (req, res) => {
   }, timeFrameObject.timeFrameUnit, timeFrameObject.timeFrameUnitQuantity);
 });
 
+app.express.get('/api/transactionInfo/:networkId/:transactionHash', (req, res) => {
+  AeReadRepository.getTransactionInfo(req.params.networkId,req.params.transactionHash, (row) => {
+    console.log('mam rowa', row);
+    res.send(row);
+  });
+});
+
+
 const getTimeFrameObject = (req) => {
   switch (req.query.timeFrame) {
     case '1h': {

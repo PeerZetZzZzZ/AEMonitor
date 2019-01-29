@@ -13,6 +13,8 @@
                         :last24h-avg-transaction-fee="last24hAvgTransactionFee"
                         :last24h-avg-transactions-per-generation="last24hAvgTransactionsPerGeneration"
                 ></transactions-statistics>
+                <h1 class="ui centered header transactionStatsFont">Search</h1>
+                <search-transaction-form></search-transaction-form>
             </div>
         </div>
         <div class="row borderedRow">
@@ -48,6 +50,7 @@
   import TransactionsViewPc from './TransactionsViewPc';
   import TransactionsStatsTimeframeDropdown
     from './components/transactions-done-timeframe-dropdown/TransactionsStatsTimeframeDropdown';
+  import SearchTransactionForm from '../transactions/components/search-transaction-form/SearchTransactionForm';
 
   export default {
     name: 'transactions-view-mobile',
@@ -60,6 +63,7 @@
       TransactionsStatistics,
       TransactionsTable,
       LastTransactionsPerHourChart,
+      SearchTransactionForm
     },
   }
 </script>
