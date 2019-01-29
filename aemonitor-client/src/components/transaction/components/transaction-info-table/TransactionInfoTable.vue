@@ -26,7 +26,7 @@
         </tr>
         <tr v-if="transaction.sender_id !== null">
             <td class="collapsing"><b>Sender id</b></td>
-            <td >{{transaction.sender_id}}</td>
+            <td :class="{ 'mobileFont': isMobile}">{{transaction.sender_id}}</td>
         </tr>
         <tr>
             <td class="collapsing"><b>Amount</b></td>
